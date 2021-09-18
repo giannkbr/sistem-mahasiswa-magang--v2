@@ -15,7 +15,7 @@ class Absen extends CI_Controller {
 	public function read($id, $bln = null, $thn=null)
     {    
     	// $id = $this->session->userdata('nip');
-		$absen = $this->absen->get_by_id(decrypt_url($id));
+		$absen = $this->absen->get_by_id($id);
 		// var_dump($absen);
 		// die();
 		if ($this->input->post('bulan')){

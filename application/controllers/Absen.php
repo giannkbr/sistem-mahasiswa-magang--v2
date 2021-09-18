@@ -14,7 +14,7 @@ class Absen extends CI_Controller {
 	{
 
 		$mahasiswa = $this->absen->get_all();
-
+		
 		$data = [
 			'title' => 'Data Absen Mahasiswa',
 			'subtitle' => 'Admin',

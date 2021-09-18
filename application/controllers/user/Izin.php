@@ -13,15 +13,15 @@ class Izin extends CI_Controller {
 
 	public function read($id)
 	{
-		$mahasiswa = $this->mahasiswa->get_by_id(decrypt_url($id));
+		$mahasiswa = $this->mahasiswa->get_by_id($id);
 		$dt1 = new DateTime($mahasiswa->waktu_masuk);
 		$dt2 = new DateTime(date('Y-m-d'));
 		$d = $dt2->diff($dt1)->days + 1;
 
-        $izin = $this->izin->get_by_id(decrypt_url($id));
+        $izin = $this->izin->get_by_id($id);
 		// var_dump($izin);
 		// die();
-		$mahasiswa = $this->mahasiswa->get_by_id(decrypt_url($id));
+		$mahasiswa = $this->mahasiswa->get_by_id($id);
 
         $data = array(
             'title' => 'Data Izin',
@@ -37,7 +37,7 @@ class Izin extends CI_Controller {
 
 	public function add($id){
 
-		$mahasiswa = $this->mahasiswa->get_by_id(decrypt_url($id));
+		$mahasiswa = $this->mahasiswa->get_by_id($id);
 		$dt1 = new DateTime($mahasiswa->waktu_masuk);
 		$dt2 = new DateTime(date('Y-m-d'));
 		$d = $dt2->diff($dt1)->days + 1;

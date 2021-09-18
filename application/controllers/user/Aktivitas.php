@@ -17,7 +17,7 @@ class Aktivitas extends CI_Controller {
 	public function read($id, $bln = null, $thn=null)
     {    
 		
-		$aktivitas = $this->aktivitas->get_by_id(decrypt_url($id));
+		$aktivitas = $this->aktivitas->get_by_id($id);
 		// var_dump($absen);
 		// die();
 		if ($this->input->post('bulan')){

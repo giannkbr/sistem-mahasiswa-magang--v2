@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row mt-3 justify-content-center">
             <div class="col-md-3">
-                <form class="" action="<?= site_url('absen/read/').$data->nim?>" method="post">
+                <form class="" action="<?= site_url('absen/read/').$data->nim. "/" .$bulan ?>" method="post">
                     <div class="input-group">
                         <select name="bulan" class="custom-select" id="inputGroupSelect04"
                             aria-label="Example select with button addon">
