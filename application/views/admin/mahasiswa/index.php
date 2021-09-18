@@ -14,7 +14,6 @@
 									<thead>
 										<tr>
 											<th>Nomor</th>
-											<th>NIM</th>
 											<th>Nama Mahasiswa</th>
 											<th>Jenis Kelamin</th>
 											<th>Opsi</th>
@@ -28,7 +27,6 @@
                                     ?>
 										<tr>
 											<td width="80px"><?= $no++; ?></td>
-											<td><?= $mahasiswa->nim?></td>
 											<td><?= $mahasiswa->nama ?></td>
 											<td><?= ucfirst($mahasiswa->jenis_kelamin)?></td>
 											<td style="text-align:center">
