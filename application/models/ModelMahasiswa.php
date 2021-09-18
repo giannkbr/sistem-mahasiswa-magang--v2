@@ -6,10 +6,20 @@ class ModelMahasiswa extends CI_Model {
     // public $table = 'mahasiswa';
     // public $id = 'nim';
     // public $order = 'DESC';
-
+    public function get($table, $data = null, $where = null)
+    {
+        if ($data != null) {
+            return $this->db->get_where($table, $data)->row_array();
+        } else {
+            return $this->db->get_where($table, $where)->result_array();
+        }
+    }
+    
     // get all
     function get_all()
-    {
+    {   
+        // $this->db->select('*');
+        // $this->db->where('status', '1');
         $this->db->order_by('nama', 'ASC');
         return $this->db->get('mahasiswa')->result();
     }

@@ -227,6 +227,25 @@ class Mahasiswa extends CI_Controller {
         
 		$html =  $this->load->view('admin/mahasiswa/cetak_data', $data);
     }
+
+	public function toggle($id)
+    {	
+		$id = $this->mahasiswa->get_by_id($id);
+		$status = $this->mahasiswa->get('mahasiswa', ['nim' => $id])['status'];
+		// var_dump($status);
+		// exit();
+		$data = $status ? 0 : 1; //Jika user aktif maka nonaktifkan, begitu pula sebaliknya
+        $pesan = $data ? 'user diaktifkan.' : 'user dinonaktifkan.';
+		
+		$this->mahasiswa->update($id, $data);
+		$this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+		<strong>Update record success!
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		  <span aria-hidden="true">&times;</span>
+		</button>
+		</div>');
+		redirect(site_url('mahasiswa'));
+    }
 }
 
 /* End of file Mahasiswa.php */

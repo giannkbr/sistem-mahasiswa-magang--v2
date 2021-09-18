@@ -186,12 +186,15 @@ class Absen extends CI_Controller {
 
     public function rekap_bulan($bln = null, $thn = null){
     
-    	if ($bln) {
-				$bulan = $bln;
-				$tahun = $thn;
+		if ($this->input->post('bulan')){
+			$bulan = $this->input->post('bulan');
+			$tahun = $this->input->post('tahun');
+		}else if ($bln) {
+			$bulan = $bln;
+			$tahun = $thn;
 		}else {
-                $bulan = date('m');
-                $tahun = date('Y');
+			$bulan = date('m');
+			$tahun = date('Y');
 		}
 
 		$mahasiswa = $this->mahasiswa->get_all();
