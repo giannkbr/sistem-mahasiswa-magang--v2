@@ -19,8 +19,7 @@ class Mahasiswa extends CI_Controller {
         $mahasiswa = $this->mahasiswa->get_all();
 
         $data = array(
-            'title' => 'Data Mahasiswa',
-            'subtitle' => 'Admin',
+            'title' => 'Data Mahasiswa',            'subtitle' => 'Admin',
             'subtitle2' => 'List Mahasiswa',
             'mahasiswa_data' => $mahasiswa,
             'page' => 'admin/mahasiswa/index',
