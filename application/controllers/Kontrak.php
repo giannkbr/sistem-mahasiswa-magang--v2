@@ -12,6 +12,7 @@ class kontrak extends CI_Controller {
 		// }
 	}
 
+	// index
 	public function index()
 	{
 	
@@ -27,6 +28,7 @@ class kontrak extends CI_Controller {
         $this->load->view('templates/app', $data);
     }
 
+	// tambah kontrak
     public function create()
 	{
         $this->_rules();
@@ -74,6 +76,7 @@ class kontrak extends CI_Controller {
 		}
     }
 
+	// edit kontrak
     public function update($id)
 	{
         $this->_rules();
@@ -132,7 +135,7 @@ class kontrak extends CI_Controller {
     }
 
     public function _rules(){
-
+		// validsai form yg ada
 		$this->form_validation->set_rules('nim', 'Nomer Induk Mahasiswa', 'required', [
 			'required' => 'Nomer Induk Mahasiswa tidak boleh kosong.',
 		]);
@@ -154,9 +157,10 @@ class kontrak extends CI_Controller {
 		]);
     }
 
+	// hapus data kkontrak 
     public function delete($id)
-		{
-				$this->db->delete('kontrak', ['kontrak_id' => $id]);
+	{
+		$this->db->delete('kontrak', ['kontrak_id' => $id]);
         $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>Delete record success!
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -164,7 +168,7 @@ class kontrak extends CI_Controller {
         </button>
         </div>');
         redirect(site_url('kontrak'));
-		}
+	}
 
 }
 

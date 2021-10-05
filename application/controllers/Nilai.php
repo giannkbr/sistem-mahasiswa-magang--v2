@@ -14,6 +14,7 @@ class Nilai extends CI_Controller {
 		// }
 	}
 
+	//index
 	public function index()
 	{
 	
@@ -29,16 +30,17 @@ class Nilai extends CI_Controller {
         $this->load->view('templates/app', $data);
     }
 
+	// tambah data nilai
 	public function create()
 	{
-        $this->_rules();
+        $this->_rules(); // load pricate function
         if ($this->form_validation->run() == FALSE) {
 			$data = array(
                 'title' => 'Data nilai',
                 'subtitle' => 'Admin',
                 'subtitle2' => 'Tambah Data nilai',
-                'mahasiswa' => $this->db->get('mahasiswa')->result(),
-                'page' => 'admin/nilai/create',
+                'mahasiswa' => $this->db->get('mahasiswa')->result(),  // ambil data mhs untuk ambil NIM
+                'page' => 'admin/nilai/create', // load halaman
             );
             $this->load->view('templates/app', $data);
 		} else {
@@ -65,18 +67,19 @@ class Nilai extends CI_Controller {
 		}
     }
 
+	// edit data nilai
 	public function update($id)
 	{
-        $this->_rules();
+        $this->_rules(); // panggil private function
         if ($this->form_validation->run() == FALSE) {
 			$nilai = $this->nilai->get_by_id($id);
 			$data = array(
                 'title' => 'Data nilai',
                 'subtitle' => 'Admin',
                 'subtitle2' => 'Tambah Data nilai',
-                'mahasiswa' => $this->db->get('mahasiswa')->result(),
+                'mahasiswa' => $this->db->get('mahasiswa')->result(), // ambil data mhs untuk ambil NIM
 				'detail' => $nilai,
-                'page' => 'admin/nilai/edit',
+                'page' => 'admin/nilai/edit', // load halaman
             );
             $this->load->view('templates/app', $data);
 		} else {
@@ -103,6 +106,7 @@ class Nilai extends CI_Controller {
 		}
     }
 
+	// private function untuk validasi
 	public function _rules(){
 		$this->form_validation->set_rules('nim', 'Nomer Induk Mahasiswa', 'required', [
 			'required' => 'Harap isi kolom Nomer Induk Mahasiswa',
@@ -138,6 +142,7 @@ class Nilai extends CI_Controller {
 		]);
 	}
 
+	// delete nilai
 	public function delete($id) 
     {
         $row = $this->nilai->get_by_id($id);

@@ -3,34 +3,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Absen extends CI_Controller {
 	
+	// yg pertama kali diakses
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('ModelAbsen', 'absen');
 		$this->load->model('ModelMahasiswa', 'mahasiswa');
 	}
-
+	
+	// index tampilan perrtama
 	public function index()
 	{
 
-		$mahasiswa = $this->absen->get_all();
+		$mahasiswa = $this->absen->get_all(); // load data
 		
 		$data = [
 			'title' => 'Data Absen Mahasiswa',
 			'subtitle' => 'Admin',
 			'subtitle2' => 'List Absen',
 			'data' => $mahasiswa,
-			'page' => 'admin/absen/index'
+			'page' => 'admin/absen/index' // pemanggilan halaman
 		];	
 
-		$this->load->view('templates/app', $data, FALSE);
+		$this->load->view('templates/app', $data, FALSE); // load_view
 	}
 
+	// untuk ngebaca keselruhan table 
 	public function read($id, $bln = null, $thn=null)
     {    
 		$absen = $this->absen->get_by_id($id);
 		// print_r($absen);
 		// exit();
+
+		// ngecek ada inputan bulan dan tahun atau ngga, kalo ngga ada nanti lari ke else paling akhir, di mana bulan dan tanggal sesuai dengan yg sekarang
 		if ($this->input->post('bulan')){
 			$bulan = $this->input->post('bulan');
 			$tahun = $this->input->post('tahun');
@@ -48,11 +53,12 @@ class Absen extends CI_Controller {
 			'tahun' => $tahun,
 			'subtitle2' => 'List Absen Mahasiswa',
 			'data' => $absen,
-			'page' => 'admin/absen/read',
+			'page' => 'admin/absen/read', // pemanggilan halaman
 		);
 		$this->load->view('templates/app', $data);
     }
 
+	// tambah absen
     public function add_new_absen($tgl = null, $bln = null, $id){
 
     	$add_absen = $this->absen->addNewAbsen($tgl);
@@ -89,6 +95,7 @@ class Absen extends CI_Controller {
 
     }
 
+	// tambah asben pulang
     public function add_absen_pulang($tgl = null, $bln = null, $id)
 	{
 		$add_absen = $this->absen->addAbsenPulang($tgl);
@@ -126,9 +133,10 @@ class Absen extends CI_Controller {
 
 	}
 
+	// edit absen
 	public function edit_absen($tgl = null, $bln = null, $id)
 	{
-		$add_absen = $this->absen->editAbsen($tgl);
+		$add_absen = $this->absen->editAbsen($tgl); // ngecek absen
 
 		if ($add_absen)
 			{
@@ -163,8 +171,11 @@ class Absen extends CI_Controller {
 
 	}
 
+	// cetak rekapan absen
     public function cetak_rekap_absen($id, $bln = null, $thn=null){
-    	if ($bln) {
+    	
+		// ngecek ada inputan bulan dan tahun atau ngga, kalo ngga ada nanti lari ke else paling akhir, di mana bulan dan tanggal sesuai dengan yg sekarang
+		if ($bln) {
 				$bulan = $bln;
 				$tahun = $thn;
 		}else {
@@ -184,8 +195,10 @@ class Absen extends CI_Controller {
 		$html =  $this->load->view('admin/absen/cetak_absen', $data);
     }
 
+	// menampilkan laporan absen perbulan
     public function rekap_bulan($bln = null, $thn = null){
     
+		// ngecek ada inputan bulan dan tahun atau ngga, kalo ngga ada nanti lari ke else paling akhir, di mana bulan dan tanggal sesuai dengan yg sekarang
 		if ($this->input->post('bulan')){
 			$bulan = $this->input->post('bulan');
 			$tahun = $this->input->post('tahun');

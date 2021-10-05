@@ -18,6 +18,7 @@ class ModelAbsen extends CI_Model {
 
     // tambah data absen
     public function addNewAbsen($tgl){
+        // ngecek ada absen ngga di hari tersebut, kalo ngga ada bakal diinput 
         if (!$tgl){
             $tgl = date('Y-m-d');
         }
@@ -70,6 +71,7 @@ class ModelAbsen extends CI_Model {
     // add absen pulang ketika mahasiswa lupa absen pulang
     public function addAbsenPulang($tgl)
     {
+        // ngecek ada absen pulang ngga di hari tersebut, kalo ngga ada bakal diinput 
         if (!$tgl) {
             $tgl = date('Y-m-d');
         }
@@ -86,9 +88,13 @@ class ModelAbsen extends CI_Model {
     // tentu saja untuk edit
     public function editAbsen($tgl)
     {
+
+		// ngecek ada absen ngga di hari tersebut, kalo ngga ada bakal diinput 
         if (!$tgl) {
             $tgl = date('Y-m-d');
         }
+
+
         $data = [
             "nim" => $this->input->post('nim'),
             "tgl_absen" => $tgl,

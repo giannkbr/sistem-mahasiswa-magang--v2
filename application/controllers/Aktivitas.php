@@ -13,6 +13,7 @@ class Aktivitas extends CI_Controller {
 		// }
 		date_default_timezone_set("Asia/Jakarta");
 	}
+	// index
 	public function index()
 	{
 		$aktivitas = $this->aktivitas->get_all();
@@ -22,16 +23,19 @@ class Aktivitas extends CI_Controller {
             'subtitle' => 'Admin',
             'subtitle2' => 'List Aktivitas',
             'aktivitas_data' => $aktivitas,
-            'page' => 'admin/aktivitas/index',
+            'page' => 'admin/aktivitas/index', // load halaman
         );
         $this->load->view('templates/app', $data);
     }
 
+	// untuk ngebaca keselruhan table 
 	public function read($id, $bln = null, $thn=null)
     {    
-		$aktivitas = $this->aktivitas->get_by_id($id);
+		$aktivitas = $this->aktivitas->get_by_id($id); // ambil data absen by id
 		// print_r($aktivitas);
 		// exit();
+
+		// ngecek ada inputan bulan dan tahun atau ngga, kalo ngga ada nanti lari ke else paling akhir, di mana bulan dan tanggal sesuai dengan yg sekarang
 		if ($this->input->post('bulan')){
 			$bulan = $this->input->post('bulan');
 			$tahun = $this->input->post('tahun');
@@ -42,6 +46,7 @@ class Aktivitas extends CI_Controller {
 			$bulan = date('m');
 			$tahun = date('Y');
 		}
+
 		$data = array(
 			'title' => 'Data Aktivitas',
 			'subtitle' => 'Admin',
@@ -49,16 +54,16 @@ class Aktivitas extends CI_Controller {
 			'tahun' => $tahun,
 			'subtitle2' => 'List Aktivitas Mahasiswa',
 			'data' => $aktivitas,
-			'page' => 'admin/aktivitas/read',
+			'page' => 'admin/aktivitas/read', // load halaman
 		);
 		$this->load->view('templates/app', $data);
     }
 
    
-
+	// add data aktivitas pertanggal
     public function add_aktivitas($tgl = null, $bln = null, $id){
     	
-    	$data = $this->aktivitas->addAktivitas($tgl);
+    	$data = $this->aktivitas->addAktivitas($tgl); // cek data aktivitas per tanggal
         if ($data)
 			{
 				 $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -88,7 +93,8 @@ class Aktivitas extends CI_Controller {
 				}
 		}
     }
-
+	
+	// edit data aktivitas pertanggal
     public function edit_aktivitas($id, $sender){
     	 	$ubah = $this->aktivitas->ubahAktivitas($id);
 			$nim  = $this->input->post('nim');
@@ -119,8 +125,9 @@ class Aktivitas extends CI_Controller {
 			}
     }
 
+	// cetak data aktivitas pdf
      public function cetak_aktivitas_pdf($id, $bln = null, $thn=null){
-    
+		// ngecek ada inputan bulan dan tahun atau ngga, kalo ngga ada nanti lari ke else paling akhir, di mana bulan dan tanggal sesuai dengan yg sekarang
     	if ($bln) {
 				$bulan = $bln;
 				$tahun = $thn;
@@ -140,8 +147,9 @@ class Aktivitas extends CI_Controller {
 		$html =  $this->load->view('admin/aktivitas/cetak_aktivitas', $data);
 	}
 
+	// cetak data aktivitas perbulan
 	public function cetak_aktivitas($id, $bln = null, $thn=null){
-    	
+    	// ngecek ada inputan bulan dan tahun atau ngga, kalo ngga ada nanti lari ke else paling akhir, di mana bulan dan tanggal sesuai dengan yg sekarang
     	if ($bln) {
 				$bulan = $bln;
 				$tahun = $thn;
@@ -161,7 +169,8 @@ class Aktivitas extends CI_Controller {
 		$this->load->view('admin/aktivitas/cetak_aktivitas', $data);
 	}
 
-	 public function cetak_aktivitas_tgl($id){
+	// cetak data aktivitas pertanggal
+	public function cetak_aktivitas_tgl($id){
     	
     	$org_tgl_awal = $this->input->post('tgl_awal', true);
 		$org_tgl_akhir = $this->input->post('tgl_akhir', true);
@@ -181,7 +190,8 @@ class Aktivitas extends CI_Controller {
 		$this->load->view('admin/aktivitas/cetak_aktivitas_tgl', $data);
 	}
 
-	  public function hapusDataAktivitas($id)
+	// delete absen
+	public function hapusDataAktivitas($id)
     {
         // $this->db->where('id', $id);
         $this->db->delete('aktivitas', ['aktivitas_id' => $id]);

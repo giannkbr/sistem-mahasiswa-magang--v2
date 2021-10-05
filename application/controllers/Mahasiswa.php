@@ -13,6 +13,7 @@ class Mahasiswa extends CI_Controller {
 		// }
 	}
 
+	// index
 	public function index()
 	{
 	
@@ -28,9 +29,10 @@ class Mahasiswa extends CI_Controller {
         $this->load->view('templates/app', $data);
     }
 
+	// tambah data mahasisswa
     public function create() 
     {    
-        $this->_rules();
+        $this->_rules(); // manggil privaet function
 
         if ($this->form_validation->run() == FALSE) {
 
@@ -38,7 +40,7 @@ class Mahasiswa extends CI_Controller {
                 'title' => 'Mahasiswa',
                 'subtitle' => 'Admin',
                 'subtitle2' => 'Tambah Mahasiswa',
-                'page' => 'admin/mahasiswa/create',
+                'page' => 'admin/mahasiswa/create', // load halaman
             );
             $this->load->view('templates/app', $data);
         } else {
@@ -103,10 +105,11 @@ class Mahasiswa extends CI_Controller {
 			}
         }
     }
-
+	
+	// read data mahasiswaa
     public function read($id) 
     {    
-        $mahasiswa = $this->mahasiswa->get_by_id($id);
+        $mahasiswa = $this->mahasiswa->get_by_id($id); // ambil by nim = id
 
         $data = array(
             'title' => 'Data Mahasiswa',
@@ -118,12 +121,14 @@ class Mahasiswa extends CI_Controller {
         $this->load->view('templates/app', $data);
     }
 
+
+	// update mahasiswa
     public function update($id) 
     {
         $this->_rules();
 
         if ($this->form_validation->run() == FALSE) {
-            $mahasiswa = $this->mahasiswa->get_by_id($id);
+            $mahasiswa = $this->mahasiswa->get_by_id($id);  // ambil data mhs by id 
 
             $data = array(
                 'title' => 'Data Mahasiswa',
@@ -201,9 +206,10 @@ class Mahasiswa extends CI_Controller {
 		]);
     }
 
+	// menghapus mahasiswa
     public function delete($id) 
     {
-        $row = $this->mahasiswa->get_by_id($id);
+        $row = $this->mahasiswa->get_by_id($id); // cek data by id
 
         if ($row) {
             $this->mahasiswa->delete($id);
@@ -228,6 +234,9 @@ class Mahasiswa extends CI_Controller {
 		$html =  $this->load->view('admin/mahasiswa/cetak_data', $data);
     }
 
+
+	// belum kelar, niatnya pengin bikin toggle untuk aktif nonaktif user
+	// ditable mahasiswa ada status, 0 aktif : 1 nonaktif, 
 	public function toggle($id)
     {	
 		$id = $this->mahasiswa->get_by_id($id);

@@ -20,6 +20,7 @@ class Auth extends CI_Controller {
 			];
 			$this->load->view('auth/login', $data, FALSE);
 		}else{
+			// private function
 			$this->_login();
 		}
 	}
@@ -41,7 +42,7 @@ class Auth extends CI_Controller {
 				];
 
 				$this->session->set_userdata($data);
-
+				// role id 1 admin, 2dst role untuk mahasiswa
 				if($mahasiswa['role_id'] == 1){
 					$this->session->set_flashdata('pesan', '<div class="alert alert-success" role="aler">Berhasil Login!</div>');
 					redirect('dashboard');
@@ -59,6 +60,7 @@ class Auth extends CI_Controller {
 		}
 	}
 
+	// logout, menghentikan session yg ada
 	public function logout(){
 		$this->session->unset_userdata('username');
 		$this->session->unset_userdata('nama');

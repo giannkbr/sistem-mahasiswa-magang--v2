@@ -14,6 +14,7 @@ class Izin extends CI_Controller {
 		// }
 		date_default_timezone_set("Asia/Jakarta");
 	}
+    // index
 	public function index()
 	{
 		$izin = $this->izin->get_all();
@@ -28,6 +29,7 @@ class Izin extends CI_Controller {
         $this->load->view('templates/app', $data);
     }
 
+    // untuk ngebaca data izin keseluruhan
 	public function read($id) 
     {    
         $izin = $this->izin->get_by_id($id);
@@ -45,7 +47,7 @@ class Izin extends CI_Controller {
         $this->load->view('templates/app', $data);
     }
 
-
+    // untuk tombol menerima izin
 	public function izin_terima($id)
 	{
 		$this->db->update('izin', ['status' => 'diterima'], ['izin_id' => $id]);
@@ -58,7 +60,8 @@ class Izin extends CI_Controller {
             redirect(site_url('izin'));
 	}
 
-    
+
+    // untuk tombol menolak izin
 	public function izin_tolak($id)
 	{
 		$this->db->update('izin', ['status' => 'ditolak'], ['izin_id' => $id]);
