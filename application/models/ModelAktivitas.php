@@ -27,6 +27,7 @@ class ModelAktivitas extends CI_Model {
         return $query->row();
     }
 
+    // ambil data aktivitas by id
      public function get_by_aktivitas($id)
     {   
         $this->db->select('*');
@@ -35,7 +36,7 @@ class ModelAktivitas extends CI_Model {
     }
 
 
-
+    // tambah aktivitas ke dlm table
     function addAktivitas($tgl)
     {   
          if (!$tgl){
@@ -53,7 +54,8 @@ class ModelAktivitas extends CI_Model {
         return $this->db->insert('aktivitas', $data);
     }
     
-     public function ubahAktivitas($id){
+    // editdata aktivitas by id
+    public function ubahAktivitas($id){
         $data = [
             "nim" => $this->input->post('nim', true),
             "jam_mulai" => $this->input->post('start_h', true).":".$this->input->post('start_m', true),
@@ -67,42 +69,46 @@ class ModelAktivitas extends CI_Model {
         return $this->db->update('aktivitas', $data);
     }
     
-     function addAktivitasUser($tgl)
-    {   
-         if (!$tgl){
-            $tgl = date('Y-m-d');
-        }
-        $data = [
-            "nim" => $_SESSION['nim'],
-            "tgl_aktivitas" => $tgl,
-            "jam_mulai" => $this->input->post('start_h', true).":".$this->input->post('start_m', true),
-            "jam_selesai" => $this->input->post('end_h', true).":".$this->input->post('end_m', true),
-            "isi_aktivitas" => $this->input->post('pekerjaan', true),
-            "waktu_input" => date("H:i"),
-        ];
-
-        return $this->db->insert('aktivitas', $data);
-    }
-    
-     public function ubahAktivitasUser($id){
-        $data = [
-            "nim" => $_SESSION['nim'],
-            "jam_mulai" => $this->input->post('start_h', true).":".$this->input->post('start_m', true),
-            "jam_selesai" => $this->input->post('end_h', true).":".$this->input->post('end_m', true),
-            "isi_aktivitas" => $this->input->post('pekerjaan', true),
-            "waktu_input" => date("H:i"),
-            // "lokasi_input" => ""
-        ];
-
-        $this->db->where('aktivitas_id' , $id);
-        return $this->db->update('aktivitas', $data);
-    }
-
-      public function hapusDataAktivitas($id)
+   
+    // delete aktivitas
+    public function hapusDataAktivitas($id)
     {
         // $this->db->where('id', $id);
         $this->db->delete('aktivitas', ['aktivitas_id' => $id]);
     }
+
+ // // add aktivitas user by tanggal kalo user lupa isi
+    // function addAktivitasUser($tgl)
+    // {   
+    //      if (!$tgl){
+    //         $tgl = date('Y-m-d');
+    //     }
+    //     $data = [
+    //         "nim" => $_SESSION['nim'],
+    //         "tgl_aktivitas" => $tgl,
+    //         "jam_mulai" => $this->input->post('start_h', true).":".$this->input->post('start_m', true),
+    //         "jam_selesai" => $this->input->post('end_h', true).":".$this->input->post('end_m', true),
+    //         "isi_aktivitas" => $this->input->post('pekerjaan', true),
+    //         "waktu_input" => date("H:i"),
+    //     ];
+
+    //     return $this->db->insert('aktivitas', $data);
+    // }
+
+    // ubah aktivitas user by tanggal kalo user lupa isi
+    //  public function ubahAktivitasUser($id){
+    //     $data = [
+    //         "nim" => $_SESSION['nim'],
+    //         "jam_mulai" => $this->input->post('start_h', true).":".$this->input->post('start_m', true),
+    //         "jam_selesai" => $this->input->post('end_h', true).":".$this->input->post('end_m', true),
+    //         "isi_aktivitas" => $this->input->post('pekerjaan', true),
+    //         "waktu_input" => date("H:i"),
+    //         // "lokasi_input" => ""
+    //     ];
+
+    //     $this->db->where('aktivitas_id' , $id);
+    //     return $this->db->update('aktivitas', $data);
+    // }
 }
 
 

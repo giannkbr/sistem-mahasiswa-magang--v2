@@ -28,12 +28,12 @@ class ModelIzin extends CI_Model {
 		return $this->db->get('izin')->result();
     }
 
-    // izin user
+    // tambah izin user user
 
     function izin_user($id){
         $this->db->select('*');
         $this->db->from('izin');
-        $this->db->join('mahasiswa', 'izin.nim = mahasiswa.nim');
+        $this->db->join('mahasiswa', 'izin.nim = mahasiswa.nim'); // join by nim
         $this->db->where('mahasiswa.nim', $id);
         $this->db->order_by('izin.izin_id', 'desc');
         return $this->db->get();

@@ -215,20 +215,20 @@ class Absen extends CI_Controller {
 
     }
 
-    function lihat_peta(){
+    // function lihat_peta(){
        	
-       	// $data['absen'] = $this->absen->getAbsenMahasiswa(date('Y-m-d'));
-    	$absen = $this->absen->get_all();
-       	$data = array(
-			'title' => 'Peta Absen',
-			'subtitle' => 'Admin',
-			'absen' => $absen,
-			'subtitle2' => 'List Absen Mahasiswa',
-			'page' => 'admin/absen/peta_absen',
-		);
+    //    	// $data['absen'] = $this->absen->getAbsenMahasiswa(date('Y-m-d'));
+    // 	$absen = $this->absen->get_all();
+    //    	$data = array(
+	// 		'title' => 'Peta Absen',
+	// 		'subtitle' => 'Admin',
+	// 		'absen' => $absen,
+	// 		'subtitle2' => 'List Absen Mahasiswa',
+	// 		'page' => 'admin/absen/peta_absen',
+	// 	);
 
-         $this->load->view('templates/app', $data);
-    }
+    //      $this->load->view('templates/app', $data);
+    // }
 
 }
 

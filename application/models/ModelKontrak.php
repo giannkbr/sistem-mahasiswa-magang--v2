@@ -30,12 +30,12 @@ class ModelKontrak extends CI_Model {
     }
     
     // get total rows
-    function total_rows($q = NULL) {
-        $this->db->like('kontrak_id', $q);
-		$this->db->or_like('kontrak_id', $q);
-		$this->db->from('kontrak');
-        return $this->db->count_all_results();
-    }
+    // function total_rows($q = NULL) {
+    //     $this->db->like('kontrak_id', $q);
+	// 	$this->db->or_like('kontrak_id', $q);
+	// 	$this->db->from('kontrak');
+    //     return $this->db->count_all_results();
+    // }
 
 
     // insert data

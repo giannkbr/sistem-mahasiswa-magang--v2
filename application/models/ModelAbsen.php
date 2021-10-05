@@ -3,12 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class ModelAbsen extends CI_Model {
 
-
+    // ngebaca table keseluruhan
 	public function get_all(){
 		$this->db->select('*');
 		return $this->db->get('mahasiswa')->result();
 	}
-	
+	// ngebaca table by nim
 	  public function get_by_id($id)
     {   
         $this->db->where('nim', $id);
@@ -16,6 +16,7 @@ class ModelAbsen extends CI_Model {
         return $query->row();
     }
 
+    // tambah data absen
     public function addNewAbsen($tgl){
         if (!$tgl){
             $tgl = date('Y-m-d');
@@ -31,13 +32,15 @@ class ModelAbsen extends CI_Model {
         return $this->db->insert('absensi', $data);
     }
 
+    // ngebaca table absen
       public function getAbsen()
     {   
         $this->db->where(['nim' => $_SESSION['nim'], 'tgl_absen' => date('Y-m-d')]);
         return $this->db->get('absensi')->row_array();
     }
 
-      public function checkInPegawai($lat, $long){
+    // add absen masuk
+    public function checkInPegawai($lat, $long){
 
         $data = [
             "nim" => $_SESSION['nim'],
@@ -50,6 +53,7 @@ class ModelAbsen extends CI_Model {
         return $this->db->insert('absensi', $data);
     }
 
+    // add absen pulang
     public function checkOutPegawai($lat, $long){
         $nim = $_SESSION['nim'];
         $tanggal = date('Y-m-d');
@@ -63,6 +67,43 @@ class ModelAbsen extends CI_Model {
         return $this->db->update('absensi' , $data);
     }
 
+    // add absen pulang ketika mahasiswa lupa absen pulang
+    public function addAbsenPulang($tgl)
+    {
+        if (!$tgl) {
+            $tgl = date('Y-m-d');
+        }
+        $data = [
+            // "nim" => $_SESSION['nim'],
+            //"tgl_absen" => $tgl,
+            //"waktu_masuk" => $this->input->post('jam_masuk', true).":".$this->input->post('menit_masuk', true),
+            "waktu_keluar" => $this->input->post('jam_keluar', true) . ":" . $this->input->post('menit_keluar', true)
+        ];
+        $this->db->where(["nim" => $this->input->post('nim'), "tgl_absen" => $tgl]);
+        return $this->db->update('absensi', $data);
+    }
+
+    // tentu saja untuk edit
+    public function editAbsen($tgl)
+    {
+        if (!$tgl) {
+            $tgl = date('Y-m-d');
+        }
+        $data = [
+            "nim" => $this->input->post('nim'),
+            "tgl_absen" => $tgl,
+            "keterangan_kerja" =>  $this->input->post('keterangan_kerja'),
+            "waktu_masuk" => $this->input->post('jam_masuk', true) . ":" . $this->input->post('menit_masuk', true),
+            "waktu_keluar" => $this->input->post('jam_keluar', true) . ":" . $this->input->post('menit_keluar', true)
+        ];
+        // var_dump($data);
+        // die();
+        $this->db->where(["nim" => $this->input->post('nim'), "tgl_absen" => $tgl]);
+        return $this->db->update('absensi', $data);
+    }
+
+
+    // add aktivitas dari sisi admin
     public function addPekerjaan($tgl){
         if (!$tgl){
             $tgl = date('Y-m-d');
@@ -94,37 +135,7 @@ class ModelAbsen extends CI_Model {
     //     return $this->db->insert('absensi', $data);
     // }
 
-    public function addAbsenPulang($tgl){
-        if (!$tgl){
-            $tgl = date('Y-m-d');
-        }
-        $data = [
-            // "nim" => $_SESSION['nim'],
-            //"tgl_absen" => $tgl,
-            //"waktu_masuk" => $this->input->post('jam_masuk', true).":".$this->input->post('menit_masuk', true),
-            "waktu_keluar" => $this->input->post('jam_keluar', true).":".$this->input->post('menit_keluar', true)
-        ];
-        $this->db->where(["nim" => $this->input->post('nim'), "tgl_absen" => $tgl]);
-        return $this->db->update('absensi' , $data);
-    }
-
-    public function editAbsen($tgl){
-        if (!$tgl){
-            $tgl = date('Y-m-d');
-        }
-        $data = [
-            "nim" => $this->input->post('nim'),
-            "tgl_absen" => $tgl,
-            "keterangan_kerja" =>  $this->input->post('keterangan_kerja'),
-            "waktu_masuk" => $this->input->post('jam_masuk', true).":".$this->input->post('menit_masuk', true),
-            "waktu_keluar" => $this->input->post('jam_keluar', true).":".$this->input->post('menit_keluar', true)
-        ];
-        // var_dump($data);
-        // die();
-        $this->db->where(["nim" => $this->input->post('nim'), "tgl_absen" => $tgl]);
-        return $this->db->update('absensi' , $data);
-    }
-
+  
 }
 
 /* End of file ModelAbsen.php */

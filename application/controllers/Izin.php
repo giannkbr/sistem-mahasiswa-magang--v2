@@ -57,6 +57,8 @@ class Izin extends CI_Controller {
             </div>');
             redirect(site_url('izin'));
 	}
+
+    
 	public function izin_tolak($id)
 	{
 		$this->db->update('izin', ['status' => 'ditolak'], ['izin_id' => $id]);
