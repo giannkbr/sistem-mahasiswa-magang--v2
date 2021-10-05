@@ -12,12 +12,15 @@ class Absen extends CI_Controller {
 		date_default_timezone_set("Asia/Jakarta");
 	}
 	
+	// read table absen untuk user
 	public function read($id, $bln = null, $thn=null)
     {    
     	// $id = $this->session->userdata('nip');
 		$absen = $this->absen->get_by_id($id);
 		// var_dump($absen);
 		// die();
+
+		// ngecek ada inputan bulan dan tahun atau ngga, kalo ngga ada nanti lari ke else paling akhir, di mana bulan dan tanggal sesuai dengan yg sekarang
 		if ($this->input->post('bulan')){
 			$bulan = $this->input->post('bulan');
 			$tahun = $this->input->post('tahun');
@@ -40,6 +43,7 @@ class Absen extends CI_Controller {
 		$this->load->view('templates/app', $data);
     }
 
+	// add aktivitas
     public function add_aktivitas($tgl = null, $bln = null){
     	
 
@@ -75,6 +79,7 @@ class Absen extends CI_Controller {
 		}
     }
     
+	// edit aktivitas
     public function edit_aktivitas($id, $sender){
     	 	$ubah = $this->aktivitas->ubahAktivitasUser($id);
 			$nim  = $this->session->userdata('nim');
@@ -105,17 +110,18 @@ class Absen extends CI_Controller {
 			}
     }
 
+	// add absen
     public function add_absen($lat = null, $long = null){
-    	if ($this->session->userdata('nim')){
+    	if ($this->session->userdata('nim')){ // cek ada session dari nim yg login apa ngga
 
-		if ($lat && $long){
+		if ($lat && $long){ // cek ada mapsnya ngga
 
-			$jam = date('H:i');
+			$jam = date('H:i'); // ambil jam
 			//$jam = date('07:02');
 
-			$absen = $this->absen->getAbsen();
+			$absen = $this->absen->getAbsen(); // baca tabl absen
 
-			if($jam > '07:00' && $jam <= '09:00')
+			if($jam > '07:00' && $jam <= '09:00') // validasi jam absen masuk
 			{
 				if ($absen){
 					$this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -135,7 +141,7 @@ class Absen extends CI_Controller {
 			            </button>
 			            </div>');
 						redirect('user/dashboard');
-					}else{
+					}else{ // maps ngga ada, jam udah lewat, absen ngga bisa dilakukan
 						$this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
 		            <strong>Terjadi kesalah saat absen!
 		            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -146,9 +152,9 @@ class Absen extends CI_Controller {
 					}
 				}
             	
-			}else if ($jam > '15:00' && $jam < '23:59'){
+			}else if ($jam > '15:00' && $jam < '23:59'){ // validasi absen pulang
 				if ($absen){
-					$update = $this->absen->checkOutPegawai($lat, $long);
+					$update = $this->absen->checkOutPegawai($lat, $long); 
 
 					if ($update){
 						$this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -159,6 +165,7 @@ class Absen extends CI_Controller {
 			            </div>');
 						redirect('user/dashboard');
 					}else{
+						// ngga absen masuk, jadi ngga bisa absen
 						$this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
 			            <strong>Mohon maaf, Anda tidak melakukan Absen Masuk!
 			            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -169,6 +176,7 @@ class Absen extends CI_Controller {
 						redirect('user/dashboard');
 					}
 				} else {
+					// absen berhasil
 					$this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
 			            <strong>Anda telah melakukan Absen Pulang!
 			            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -179,6 +187,7 @@ class Absen extends CI_Controller {
 				}
 
 			} else {
+				// jam udah lewat, absen ngga bisa dilakukan
 				$this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
 			            <strong>Mohon maaf, Silakan absen dengan waktu yang telah ditentukan!
 			            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -189,6 +198,7 @@ class Absen extends CI_Controller {
 			}
 
 		}else {
+			// maps ngga ada absen ngga bisa dilakukan
 			$this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
 			            <strong>Mohon maaf, Anda tidak mengizinkan akses lokasi!
 			            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -202,7 +212,7 @@ class Absen extends CI_Controller {
     }
 
     
-    
+    // hapus aktivitas
     public function hapus_aktivitas($id)
 	{
 		if ($_SESSION['nim']){

@@ -11,9 +11,10 @@ class Izin extends CI_Controller {
 		date_default_timezone_set("Asia/Jakarta");
 	}
 
+	// baca table izin
 	public function read($id)
 	{
-		$mahasiswa = $this->mahasiswa->get_by_id($id);
+		$mahasiswa = $this->mahasiswa->get_by_id($id); 
 		$dt1 = new DateTime($mahasiswa->waktu_masuk);
 		$dt2 = new DateTime(date('Y-m-d'));
 		$d = $dt2->diff($dt1)->days + 1;
@@ -52,6 +53,7 @@ class Izin extends CI_Controller {
 		$this->load->view('templates/app', $data, FALSE);
 	}
 
+	// add izin
 	public function add_action(){
 
 		$this->db->trans_start();
@@ -108,6 +110,7 @@ class Izin extends CI_Controller {
 		redirect(site_url('user/izin/read/'.decrypt_url($id)));
 	}
 
+	// delete izin
 	public function delete($id)
 	{
 		$this->db->delete('izin', ['izin_id' => $id]);
