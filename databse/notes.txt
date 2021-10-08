@@ -1,0 +1,3 @@
+database bukan yg terbaru
+kalo mau pake databse terbaru, bisa export langsung dari web yg lagi berjalan
+
